@@ -15,21 +15,22 @@ Once you are on the Remix website, create a new file by clicking on the "+" icon
 Save the file with a .sol extension. Copy and paste the following code into the file:
 
 ```
-// SPDX-License-Identifier: MIT 
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.23;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol"; 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract oniToken is ERC20 {
+contract OniToken is ERC20, Ownable {
     // Constructor to initialize the ERC-20 token with a name and symbol,
     // and mint an initial supply to the contract deployer.
-    constructor() ERC20("Oni Token", "0T") {
+    constructor() ERC20("Oni Token", "0T") Ownable(msg.sender){
         _mint(msg.sender, 1000000 * 10**decimals());
     }
 
     // Function to allow the contract owner to mint new tokens and assign them to a specified address.
-    // This function is public, allowing anyone to call it.
-    function mint(address to, uint256 amount) public {
+    // This function can only be called by the owner.
+    function mint(address to, uint256 amount) public onlyOwner {
         _mint(to, amount);
     }
 
