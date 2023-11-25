@@ -22,6 +22,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract OniToken is ERC20, Ownable {
+
     // Constructor to initialize the ERC-20 token with a name and symbol,
     // and mint an initial supply to the contract deployer.
     constructor() ERC20("Oni Token", "0T") Ownable(msg.sender){
@@ -30,7 +31,8 @@ contract OniToken is ERC20, Ownable {
 
     // Function to allow the contract owner to mint new tokens and assign them to a specified address.
     // This function can only be called by the owner.
-    function mint(address to, uint256 amount) public onlyOwner {
+    function mint(address to, uint256 amount) public onlyOwner {  
+        require(to == msg.sender, "Owner only sorry."); 
         _mint(to, amount);
     }
 
@@ -41,7 +43,6 @@ contract OniToken is ERC20, Ownable {
         _burn(msg.sender, amount);
     }
 }
-
 ```
 To compile the code, click on the "Solidity Compiler" tab in the left-hand sidebar. Make sure the "Compiler" option is set to "0.8.18" (or another compatible version), and then click on the "Compile reqasrev.sol" button. 
 
